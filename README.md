@@ -6,6 +6,8 @@ completions based on most-frequent previous queries.
 
 Python REST API with AJAX client.
 
+Create a file `words.txt` containing a list of suggestions.
+
 Launch server with:
 
     make
