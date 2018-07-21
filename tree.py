@@ -1,19 +1,41 @@
-          
+
+SUGGESTION_NUM = 10 # num of suggestions for each node          
+
+class Suggestions:
+
+  def __init__(self):
+    self.suggestions = [ (0, None) for _ in range(SUGGESTION_NUM) ]
+
+  def add(self, suggestion, frequency):
+    i = next( (i for i, v in enumerate(self.suggestions) if frequency > v[0]), None)
+    if i is not None:
+      self.suggestions[i] = (frequency, suggestion)
+    self.suggestions.sort()
+
+  def all(self):
+    return [ w for _, w in self.suggestions if w is not None ]
+
 class Trie:
 
-    def __init__(self, is_word=False, children=None):
-        self.is_word = is_word
-        if children:
-            self.children = children
-        else:
-            self.children = {}
+    def __init__(self, parent=None):
+        self.is_word = 0
+        self.suggestions = Suggestions()
+        self.parent = parent
+        self.children = {}
+
+    def update_frequencies(self, word, frequency):
+      cur = self
+      while cur.parent is not None:
+        cur = cur.parent
+        cur.suggestions.add(word, frequency)
             
     def insert_trie(self, word, i):
         if i == len(word):
-            self.is_word = True
+            self.is_word += 1
+            self.update_frequencies(word, self.is_word)
             return
         first_char = word[i]
-        self.children.setdefault(first_char, Trie())
+        self.children.setdefault(first_char, Trie(self))
         node = self.children[first_char]
         node.insert_trie(word, i + 1)
 
@@ -48,7 +70,7 @@ class Trie:
         :rtype: bool
         """
         node = self.search_trie(prefix, 0)
-        return bool(node)
+        return node
 
 def build_tree(file):
   tree = Trie()

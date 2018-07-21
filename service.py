@@ -8,8 +8,10 @@ app = flask.Flask(__name__, static_url_path='/static')
 @app.route('/suggestions')
 def suggestions():
     query = flask.request.args.get('query', default = "", type = str)
-    if query_tree.startsWith(query):
-        res = "{} is in my dictionary".format(query)
+    node = query_tree.startsWith(query)
+    if node is not None:
+        suggestions = " ".join( node.suggestions.all() )
+        res = "{} is in my dictionary,  {}".format(query, suggestions)
     else:
         res = "{} is not in my dictionary".format(query)
     return res
