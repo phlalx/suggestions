@@ -4,3 +4,13 @@ all:
 
 browser:
 	open -a safari http://localhost:5000/static/index.html
+
+clean:
+	rm -rf __pycache__
+
+docker-build:
+	docker build -t suggestions .
+
+docker-run:
+	docker run -p 5000:5000 suggestions
+

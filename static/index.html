@@ -6,11 +6,26 @@
 
     <form action="/action_page.php">
         Enter your query:<br>
-        <input type="text" id="query" oninput="loadDoc()"><br>
+        <input autocomplete="off" type="text" id="query" oninput="loadDoc()"><br>
         <input type="button" value="Submit"> 
     </form>
     <div id="suggestions"> No suggestion so far </div>
 
     </body>
-    <script src="/static/index.js"> </script>
+    <script>
+   
+function loadDoc() {
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+        document.getElementById("suggestions").innerHTML = this.responseText;
+      }
+    };
+    user_value = document.getElementById("query").value
+    console.log("loadDoc")
+    xhttp.open("GET", "/suggestions?query=" + user_value);
+    xhttp.send();
+  }
+    
+    </script>
 </html>

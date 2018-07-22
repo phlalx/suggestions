@@ -3,18 +3,17 @@ import tree
 
 query_tree = tree.build_tree('words.txt')
 
-app = flask.Flask(__name__, static_url_path='/static')
+app = flask.Flask(__name__, static_url_path='')
 
 @app.route('/suggestions')
 def suggestions():
     query = flask.request.args.get('query', default = "", type = str)
     node = query_tree.startsWith(query)
     if node is not None:
-        suggestions = " ".join( node.suggestions.all() )
-        res = "{} is in my dictionary,  {}".format(query, suggestions)
+        res = " ".join( node.suggestions.all() )
     else:
-        res = "{} is not in my dictionary".format(query)
+        res = ""
     return res
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0', debug=True)  # default port = 5000

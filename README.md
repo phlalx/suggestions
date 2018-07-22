@@ -15,3 +15,10 @@ Launch server with:
 Then in another terminal
 
     open -a safari http://localhost:5000
+
+Resources
+---------
+
+https://medium.com/@umerfarooq_26378/web-services-in-python-ef81a9067aaf
+http://flask.pocoo.org/docs/1.0/api/
+https://docs.docker.com/get-started/part2/#build-the-app
