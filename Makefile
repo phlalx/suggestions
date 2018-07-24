@@ -8,6 +8,9 @@ browser:
 clean:
 	rm -rf __pycache__
 
+docker-run-redis:
+	docker run -p 6379:6379 redis
+
 docker-build:
 	docker build -t suggestions .
 

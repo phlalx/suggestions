@@ -1,15 +1,40 @@
 <!DOCTYPE html>
 <html>
     <title> Suggestions </title>
-    <style> </style>
+    <style>
+    
+    </style>
     <body>
 
-    <form action="/action_page.php">
-        Enter your query:<br>
-        <input autocomplete="off" type="text" id="query" oninput="loadDoc()"><br>
-        <input type="button" value="Submit"> 
+    <h2> Suggestion system </h2>
+
+    Enter your query. Completions with be suggested based on most frequent
+    past queries.
+
+    <form>
+        <input autocomplete="off" type="text" id="query" oninput="loadDoc()">
+        <input type="button" value="Submit"> <br>
     </form>
-    <div id="suggestions"> No suggestion so far </div>
+    <div id="suggestions"> </div>
+
+    <h2> Some fun with redis </h2>
+
+    <form>
+        Enter a key-value association to be inserted in the redis dictionary:<br>
+         <input autocomplete="off" type="text" id="setkey">
+         <input autocomplete="off" type="text" id="setvalue">
+         <input type="button" value="Submit" onclick="setkeyvalue()"> 
+        <br>
+    </form>
+
+    <form>
+        Enter the key you want to retrieve:<br>
+        <input autocomplete="off" type="text" id="getkey">
+        <input type="button" value="Submit" onclick="jsgetkey()"> 
+        <div id="result"></div>
+
+        <br>
+    </form>
 
     </body>
     <script>
@@ -22,10 +47,29 @@ function loadDoc() {
       }
     };
     user_value = document.getElementById("query").value
-    console.log("loadDoc")
     xhttp.open("GET", "/suggestions?query=" + user_value);
     xhttp.send();
   }
-    
+
+  function setkeyvalue() {
+    var xhttp = new XMLHttpRequest();
+    key = document.getElementById("setkey").value
+    value = document.getElementById("setvalue").value
+    xhttp.open("GET", "/setkeyvalue?key=" + key + "&value=" + value);
+    xhttp.send();
+  }
+
+function jsgetkey() {
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+        document.getElementById("result").innerHTML = this.responseText;
+      }
+    };
+    key = document.getElementById("getkey").value
+    xhttp.open("GET", "/getkey?key=" + key);
+    xhttp.send();
+  }
+
     </script>
 </html>

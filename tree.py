@@ -79,3 +79,13 @@ def build_tree(file):
       tree.insert(l[:-1])
   return tree
 
+
+
+
+
+
+
+
+
+        
+
