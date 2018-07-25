@@ -6,18 +6,7 @@
     </style>
     <body>
 
-    <h2> Suggestion system </h2>
-
-    Enter your query. Completions with be suggested based on most frequent
-    past queries.
-
-    <form>
-        <input autocomplete="off" type="text" id="query" oninput="loadDoc()">
-        <input type="button" value="Submit"> <br>
-    </form>
-    <div id="suggestions"> </div>
-
-    <h2> Some fun with redis </h2>
+    <h2> Query a redis DB </h2>
 
     <form>
         Enter a key-value association to be inserted in the redis dictionary:<br>
@@ -39,18 +28,6 @@
     </body>
     <script>
    
-function loadDoc() {
-    var xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function() {
-      if (this.readyState == 4 && this.status == 200) {
-        document.getElementById("suggestions").innerHTML = this.responseText;
-      }
-    };
-    user_value = document.getElementById("query").value
-    xhttp.open("GET", "/suggestions?query=" + user_value);
-    xhttp.send();
-  }
-
   function setkeyvalue() {
     var xhttp = new XMLHttpRequest();
     key = document.getElementById("setkey").value
