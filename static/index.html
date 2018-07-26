@@ -1,33 +1,59 @@
 <!DOCTYPE html>
 <html>
-    <title> Suggestions </title>
-    <style>
+<title> Suggestions </title>
+<style>
+</style>
+
+<body>
     
-    </style>
-    <body>
+    <h2> Suggestions </h2>
+
+    Enter your query. Completions with be suggested based on most frequent past queries.
+
+    <form>
+      <input autocomplete="off" type="text" id="query" oninput="getSuggestions()">
+      <input type="button" value="Submit">
+      <br>
+    </form>
+    <div id="suggestions"> </div>
+
 
     <h2> Query a redis DB </h2>
 
     <form>
-        Enter a key-value association to be inserted in the redis dictionary:<br>
-         <input autocomplete="off" type="text" id="setkey">
-         <input autocomplete="off" type="text" id="setvalue">
-         <input type="button" value="Submit" onclick="setkeyvalue()"> 
-        <br>
+      Enter a key-value association to be inserted in the redis dictionary:
+      <br>
+      <input autocomplete="off" type="text" id="setkey">
+      <input autocomplete="off" type="text" id="setvalue">
+      <input type="button" value="Submit" onclick="setkeyvalue()">
+      <br>
     </form>
 
     <form>
-        Enter the key you want to retrieve:<br>
-        <input autocomplete="off" type="text" id="getkey">
-        <input type="button" value="Submit" onclick="jsgetkey()"> 
-        <div id="result"></div>
+      Enter the key you want to retrieve:
+      <br>
+      <input autocomplete="off" type="text" id="getkey">
+      <input type="button" value="Submit" onclick="getvalue()">
+      <div id="result"></div>
 
-        <br>
+      <br>
     </form>
 
-    </body>
-    <script>
-   
+</body>
+<script>
+
+  function getSuggestions() {
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+        document.getElementById("suggestions").innerHTML = this.responseText;
+      }
+    };
+    query = document.getElementById("query").value
+    xhttp.open("GET", "/suggestions?query=" + query);
+    xhttp.send();
+  }
+
   function setkeyvalue() {
     var xhttp = new XMLHttpRequest();
     key = document.getElementById("setkey").value
@@ -36,9 +62,9 @@
     xhttp.send();
   }
 
-function jsgetkey() {
+  function getvalue() {
     var xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function() {
+    xhttp.onreadystatechange = function () {
       if (this.readyState == 4 && this.status == 200) {
         document.getElementById("result").innerHTML = this.responseText;
       }
@@ -48,5 +74,6 @@ function jsgetkey() {
     xhttp.send();
   }
 
-    </script>
+</script>
+
 </html>

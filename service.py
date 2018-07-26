@@ -10,9 +10,18 @@ def get_db():
         g.db = redis.Redis(host="localhost", db=0, socket_connect_timeout=2, socket_timeout=2)
     return g.db
 
+@app.route('/suggestions')
+def suggestions():
+    query = flask.request.args.get('query', default = '', type = str)
+    red = get_db()
+    res = red.get(query)
+    if res is None:
+        return ""
+    else:
+        return res
+
 @app.route('/getkey')
 def getkey():
-    # TODO set up connection somewhere else
     key = flask.request.args.get('key', default = '', type = str)
     red = get_db()
     res = red.get(key)
