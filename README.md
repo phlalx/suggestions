@@ -30,6 +30,5 @@ https://medium.com/@umerfarooq_26378/web-services-in-python-ef81a9067aaf
 http://flask.pocoo.org/docs/1.0/api/
 https://docs.docker.com/get-started/part2/#build-the-app
 https://spark.apache.org/docs/0.9.0/api/pyspark/index.html
-
 https://blogs.oracle.com/scoter/networking-in-virtualbox-v2
 https://superuser.com/questions/310697/connect-to-the-host-machine-from-a-virtualbox-guest-os
