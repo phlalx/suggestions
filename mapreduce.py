@@ -1,3 +1,6 @@
+# pyspark contains a standalone spark implem
+# export SPARK_HOME=/usr/local/lib/python3.6/dist-packages/pyspark
+# export PYSPARK_PYTHON=python3 
 
 from pyspark import SparkContext
 import redis
@@ -32,6 +35,7 @@ rrd5 = rrd4.map(remove_freq)
 
 def to_redis(x):  
   try:
+    pass
     red = redis.Redis(host="10.0.2.2", db=0, socket_connect_timeout=2, socket_timeout=2)
     w, l = x
     red.set(w, l)

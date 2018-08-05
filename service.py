@@ -7,7 +7,7 @@ from flask import g
 
 def get_db():
     if 'db' not in g:
-        g.db = redis.Redis(host="localhost", db=0, socket_connect_timeout=2, socket_timeout=2)
+        g.db = redis.Redis(host="redis", db=0, socket_connect_timeout=2, socket_timeout=2)
     return g.db
 
 @app.route('/suggestions')
