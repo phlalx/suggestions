@@ -1,5 +1,6 @@
 import flask
 import redis
+import mapreduce
 
 app = flask.Flask(__name__, static_url_path='')
 
@@ -10,6 +11,14 @@ def get_db():
         g.db = redis.Redis(host="redis", db=0, socket_connect_timeout=2, socket_timeout=2)
     return g.db
 
+@app.route('/filldb')
+def fill_db():
+    try:
+        mapreduce.fill_redis()
+    except Exception as e:
+        return str(e)
+    return "Done"
+    
 @app.route('/suggestions')
 def suggestions():
     query = flask.request.args.get('query', default = '', type = str)

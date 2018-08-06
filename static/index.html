@@ -5,6 +5,13 @@
 </style>
 
 <body>
+    <h2> Fill redis DB </h2>
+
+    <form>
+      This will compute suggestions based on a static queries file.
+      <input type="button" value="Submit" onclick="filldb()">
+      <div id="completed"> </div>
+    </form>
     
     <h2> Suggestions </h2>
 
@@ -16,7 +23,6 @@
       <br>
     </form>
     <div id="suggestions"> </div>
-
 
     <h2> Query a redis DB </h2>
 
@@ -71,6 +77,17 @@
     };
     key = document.getElementById("getkey").value
     xhttp.open("GET", "/getkey?key=" + key);
+    xhttp.send();
+  }
+
+  function filldb() {
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function () {
+      if (this.readyState == 4 && this.status == 200) {
+        document.getElementById("completed").innerHTML = this.responseText;
+      }
+    };
+    xhttp.open("GET", "/filldb");
     xhttp.send();
   }
 

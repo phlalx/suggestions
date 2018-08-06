@@ -5,12 +5,6 @@
 from pyspark import SparkContext
 import redis
 
-sc = SparkContext.getOrCreate()
-rrd = sc.textFile("requests.txt")
-
-rrd1 = rrd.map(lambda x: (x, 1))
-rrd2 = rrd1.reduceByKey(lambda x, y : x + y)
-
 def prefixes(x):
   w, n = x
   res = []
@@ -18,28 +12,33 @@ def prefixes(x):
     res.append((w[:i], [ (n, w) ]))
   return res
 
-rrd3 = rrd2.flatMap(prefixes)
-
 def g(x, y):
   u = x + y
   u.sort(reverse = True)
   return u[:10]
 
-rrd4 = rrd3.reduceByKey(g)
-
 def remove_freq(x):
   k, l = x
   return k, " ".join([ w for (_, w) in l ])
 
-rrd5 = rrd4.map(remove_freq)
-
 def to_redis(x):  
   try:
     pass
-    red = redis.Redis(host="10.0.2.2", db=0, socket_connect_timeout=2, socket_timeout=2)
+    red = redis.Redis(host="redis", db=0, socket_connect_timeout=2, socket_timeout=2)
     w, l = x
     red.set(w, l)
   except:
     pass
 
-rrd5.foreach(to_redis)
+def fill_redis():
+  sc = SparkContext.getOrCreate()
+  rrd = sc.textFile("requests.txt")
+  rrd1 = rrd.map(lambda x: (x, 1))
+  rrd2 = rrd1.reduceByKey(lambda x, y : x + y)
+  rrd3 = rrd2.flatMap(prefixes)
+  rrd4 = rrd3.reduceByKey(g)
+  rrd5 = rrd4.map(remove_freq)
+  rrd5.foreach(to_redis)
+
+if __name__ == "__main__":
+  fill_redis()

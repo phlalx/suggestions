@@ -24,8 +24,6 @@ services:
     image: redis
     ports:
       - "6379:6379"
-    # volumes:
-      # - "/home/docker/data:/data"
     deploy:
       placement:
         constraints: [node.role == manager]
