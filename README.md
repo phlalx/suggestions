@@ -5,7 +5,7 @@ Propose possible query completions based on a log of past queries.
 
 This is very basic and was done as an opportunity to play with docker, spark and redis.
 
-The web app which uses [flask](http://flask.pocoo.org), [pyspark](https://spark.apache.org/docs/0.9.0/api/pyspark/index.html), [redis-py](https://redis-py.readthedocs.io/en/latest/) and is based on the [docker tutorial](https://docs.docker.com/get-started/). It is implemented as simple REST API with an AJAX client.
+The web app uses [flask](http://flask.pocoo.org), [pyspark](https://spark.apache.org/docs/0.9.0/api/pyspark/index.html), [redis-py](https://redis-py.readthedocs.io/en/latest/) and is based on the [docker tutorial](https://docs.docker.com/get-started/). It is implemented as simple REST API with an AJAX client.
 
 Launch redis with:
 
